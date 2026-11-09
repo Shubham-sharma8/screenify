@@ -1,0 +1,568 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000010000000000000001 /* ScreenifyBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000001 /* ScreenifyBridge.swift */; };
+		A10000020000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000020000000000000001 /* main.swift */; };
+		A10000030000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000030000000000000001 /* main.swift */; };
+		A10000040000000000000001 /* ScreenifyXcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000040000000000000001 /* ScreenifyXcodeTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A30000010000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000010000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000020000000000000001;
+			remoteInfo = "get-windows-arm64";
+		};
+		A30000020000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000010000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000030000000000000001;
+			remoteInfo = "activate-window-arm64";
+		};
+		A30000030000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000010000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A40000010000000000000001;
+			remoteInfo = Screenify;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A20000010000000000000001 /* ScreenifyBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift"; sourceTree = "<group>"; };
+		A20000020000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "GetWindows.swift"; path = "macos/Sources/GetWindows/main.swift"; sourceTree = "<group>"; };
+		A20000030000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ActivateWindow.swift"; path = "macos/Sources/ActivateWindow/main.swift"; sourceTree = "<group>"; };
+		A20000040000000000000001 /* ScreenifyXcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift"; sourceTree = "<group>"; };
+		A20000050000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "macos/Info.plist"; sourceTree = "<group>"; };
+		A20000060000000000000001 /* entitlements.mac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "scripts/entitlements.mac.plist"; sourceTree = "<group>"; };
+		A20000070000000000000001 /* Screenify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Screenify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000080000000000000001 /* get-windows-arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-windows-arm64"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000090000000000000001 /* activate-window-arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "activate-window-arm64"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A200000A0000000000000001 /* ScreenifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000100000000000000001 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/index.js"; sourceTree = "<group>"; };
+		A20000110000000000000001 /* preload.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/preload.js"; sourceTree = "<group>"; };
+		A20000120000000000000001 /* cursorMotionPipeline.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/cursorMotionPipeline.js"; sourceTree = "<group>"; };
+		A20000130000000000000001 /* subtitleTranscription.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/subtitleTranscription.js"; sourceTree = "<group>"; };
+		A20000140000000000000001 /* aiEditService.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/aiEditService.js"; sourceTree = "<group>"; };
+		A20000150000000000000001 /* editorPresets.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/editorPresets.js"; sourceTree = "<group>"; };
+		A20000160000000000000001 /* editorPresetSettings.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/editorPresetSettings.js"; sourceTree = "<group>"; };
+		A20000170000000000000001 /* teleprompter.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/teleprompter.js"; sourceTree = "<group>"; };
+		A20000180000000000000001 /* install-macos-app.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "scripts/install-macos-app.js"; sourceTree = "<group>"; };
+		A20000190000000000000001 /* xcode-build-app.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "scripts/xcode-build-app.sh"; sourceTree = "<group>"; };
+		A200001A0000000000000001 /* screenify.test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "tests/screenify.test.js"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A50000010000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000020000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000030000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A50000040000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A60000010000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A60000020000000000000001 /* macOS Native (Swift & Signing) */,
+				A60000030000000000000001 /* Electron Main Process (JS) */,
+				A60000040000000000000001 /* Build & Packaging Scripts */,
+				A60000050000000000000001 /* Tests */,
+				A60000060000000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A60000020000000000000001 /* macOS Native (Swift & Signing) */ = {
+			isa = PBXGroup;
+			children = (
+				A20000010000000000000001 /* ScreenifyBridge.swift */,
+				A20000020000000000000001 /* main.swift */,
+				A20000030000000000000001 /* main.swift */,
+				A20000050000000000000001 /* Info.plist */,
+				A20000060000000000000001 /* entitlements.mac.plist */,
+			);
+			name = "macOS Native (Swift & Signing)";
+			sourceTree = "<group>";
+		};
+		A60000030000000000000001 /* Electron Main Process (JS) */ = {
+			isa = PBXGroup;
+			children = (
+				A20000100000000000000001 /* index.js */,
+				A20000110000000000000001 /* preload.js */,
+				A20000120000000000000001 /* cursorMotionPipeline.js */,
+				A20000130000000000000001 /* subtitleTranscription.js */,
+				A20000140000000000000001 /* aiEditService.js */,
+				A20000150000000000000001 /* editorPresets.js */,
+				A20000160000000000000001 /* editorPresetSettings.js */,
+				A20000170000000000000001 /* teleprompter.js */,
+			);
+			name = "Electron Main Process (JS)";
+			sourceTree = "<group>";
+		};
+		A60000040000000000000001 /* Build & Packaging Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				A20000180000000000000001 /* install-macos-app.js */,
+				A20000190000000000000001 /* xcode-build-app.sh */,
+			);
+			name = "Build & Packaging Scripts";
+			sourceTree = "<group>";
+		};
+		A60000050000000000000001 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				A20000040000000000000001 /* ScreenifyXcodeTests.swift */,
+				A200001A0000000000000001 /* screenify.test.js */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		A60000060000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A20000070000000000000001 /* Screenify.app */,
+				A20000080000000000000001 /* get-windows-arm64 */,
+				A20000090000000000000001 /* activate-window-arm64 */,
+				A200000A0000000000000001 /* ScreenifyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A40000010000000000000001 /* Screenify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000010000000000000001 /* Build configuration list for PBXNativeTarget "Screenify" */;
+			buildPhases = (
+				A80000010000000000000001 /* Sources */,
+				A50000010000000000000001 /* Frameworks */,
+				A90000010000000000000001 /* Assemble & Sign Screenify Electron Bundle */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA0000010000000000000001 /* PBXTargetDependency */,
+				AA0000020000000000000001 /* PBXTargetDependency */,
+			);
+			name = Screenify;
+			productName = Screenify;
+			productReference = A20000070000000000000001 /* Screenify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A40000020000000000000001 /* get-windows-arm64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000020000000000000001 /* Build configuration list for PBXNativeTarget "get-windows-arm64" */;
+			buildPhases = (
+				A80000020000000000000001 /* Sources */,
+				A50000020000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "get-windows-arm64";
+			productName = "get-windows-arm64";
+			productReference = A20000080000000000000001 /* get-windows-arm64 */;
+			productType = "com.apple.product-type.tool";
+		};
+		A40000030000000000000001 /* activate-window-arm64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000030000000000000001 /* Build configuration list for PBXNativeTarget "activate-window-arm64" */;
+			buildPhases = (
+				A80000030000000000000001 /* Sources */,
+				A50000030000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "activate-window-arm64";
+			productName = "activate-window-arm64";
+			productReference = A20000090000000000000001 /* activate-window-arm64 */;
+			productType = "com.apple.product-type.tool";
+		};
+		A40000040000000000000001 /* ScreenifyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000040000000000000001 /* Build configuration list for PBXNativeTarget "ScreenifyTests" */;
+			buildPhases = (
+				A80000040000000000000001 /* Sources */,
+				A50000040000000000000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AA0000030000000000000001 /* PBXTargetDependency */,
+			);
+			name = ScreenifyTests;
+			productName = ScreenifyTests;
+			productReference = A200000A0000000000000001 /* ScreenifyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000010000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A40000010000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+						DevelopmentTeam = 9TKKPN6F59;
+						ProvisioningStyle = Automatic;
+					};
+					A40000020000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+						DevelopmentTeam = 9TKKPN6F59;
+						ProvisioningStyle = Automatic;
+					};
+					A40000030000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+						DevelopmentTeam = 9TKKPN6F59;
+						ProvisioningStyle = Automatic;
+					};
+					A40000040000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+						DevelopmentTeam = 9TKKPN6F59;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXProject "Screenify" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A60000010000000000000001;
+			productRefGroup = A60000060000000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A40000010000000000000001 /* Screenify */,
+				A40000020000000000000001 /* get-windows-arm64 */,
+				A40000030000000000000001 /* activate-window-arm64 */,
+				A40000040000000000000001 /* ScreenifyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A90000010000000000000001 /* Assemble & Sign Screenify Electron Bundle */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Assemble & Sign Screenify Electron Bundle";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "\"${SRCROOT}/scripts/xcode-build-app.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A80000010000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000010000000000000001 /* ScreenifyBridge.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80000020000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000020000000000000001 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80000030000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000030000000000000001 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80000040000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000040000000000000001 /* ScreenifyXcodeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AA0000010000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000020000000000000001 /* get-windows-arm64 */;
+			targetProxy = A30000010000000000000001 /* PBXContainerItemProxy */;
+		};
+		AA0000020000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000030000000000000001 /* activate-window-arm64 */;
+			targetProxy = A30000020000000000000001 /* PBXContainerItemProxy */;
+		};
+		AA0000030000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A40000010000000000000001 /* Screenify */;
+			targetProxy = A30000030000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AB0000010000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AB0000020000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1.12.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AB0000110000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "scripts/entitlements.mac.plist";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "macos/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB0000120000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "scripts/entitlements.mac.plist";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "macos/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AB0000210000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB0000220000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AB0000310000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB0000320000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AB0000410000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB0000420000000000000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70000000000000000000001 /* Build configuration list for PBXProject "Screenify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0000010000000000000001 /* Debug */,
+				AB0000020000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000010000000000000001 /* Build configuration list for PBXNativeTarget "Screenify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0000110000000000000001 /* Debug */,
+				AB0000120000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000020000000000000001 /* Build configuration list for PBXNativeTarget "get-windows-arm64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0000210000000000000001 /* Debug */,
+				AB0000220000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000030000000000000001 /* Build configuration list for PBXNativeTarget "activate-window-arm64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0000310000000000000001 /* Debug */,
+				AB0000320000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000040000000000000001 /* Build configuration list for PBXNativeTarget "ScreenifyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0000410000000000000001 /* Debug */,
+				AB0000420000000000000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A00000010000000000000001 /* Project object */;
+}

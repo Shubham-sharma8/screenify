@@ -68,9 +68,17 @@ screenify-src/
 │   ├── aiQuota.js              # Token and API quota manager
 │   ├── license.js              # Offline open-source license verification
 │   └── helpers.js              # Path resolution and local URL utilities
+├── macos/                      # Native Swift helpers, Info.plist & XCTest suite
+│   ├── Sources/GetWindows/     # Native CoreGraphics window enumeration CLI (get-windows-arm64)
+│   ├── Sources/ActivateWindow/ # Native Accessibility window activation CLI (activate-window-arm64)
+│   ├── Tests/ScreenifyTests/   # XCTest bundle verifying app bundle, code signing & Node tests
+│   └── Info.plist              # macOS bundle metadata & TCC privacy descriptions
+├── Screenify.xcodeproj/        # Xcode project for building, signing, running & testing
 ├── out/                        # Next.js static renderer UI (React bundles & assets)
 ├── scripts/
-│   └── install-macos-app.js    # ASAR repacker, ad-hoc codesigning & installer
+│   ├── install-macos-app.js    # ASAR repacker, inside-out codesigning & installer
+│   ├── xcode-build-app.sh      # Xcode build phase script for Electron bundle assembly
+│   └── entitlements.mac.plist  # Hardened Runtime, V8 JIT & macOS capture entitlements
 ├── tests/
 │   └── screenify.test.js       # Node native test runner suite
 └── package.json
@@ -104,16 +112,43 @@ Run the one-command bootstrap script:
 
 ---
 
-## Building & Installing to `/Applications`
+## Building, Signing & Testing in Xcode (`Screenify.xcodeproj`)
 
-To package your code changes into the macOS desktop app:
+Screenify includes a native Xcode project (`Screenify.xcodeproj`) so you can manage Apple Developer code signing, compile the native Swift helpers (`get-windows-arm64`, `activate-window-arm64`), launch the app (`⌘R`), and run the full XCTest + Node test suite (`⌘U`) directly inside Xcode.
+
+```bash
+# Open the project in Xcode
+npm run xcode
+# or: open Screenify.xcodeproj
+
+# Build and sign Screenify.app from the command line via xcodebuild
+npm run xcode:build
+
+# Run XCTest + Node test suite via xcodebuild
+npm run xcode:test
+```
+
+### Signing in Xcode
+1. Open `Screenify.xcodeproj` in Xcode.
+2. Select the **Screenify** project in the Project Navigator and choose the **Screenify** target.
+3. Open the **Signing & Capabilities** tab and select your Apple Developer Team (pre-configured for Automatic Signing with `scripts/entitlements.mac.plist`).
+4. Press **⌘R** to build, sign all nested Electron helpers/frameworks with your certificate, and run `Screenify.app`, or press **⌘U** to run the `ScreenifyTests` suite.
+
+---
+
+## Building & Installing to `/Applications` (CLI)
+
+To package your code changes into the macOS desktop app directly from the terminal:
 
 ```bash
 # Repack source files into the parent Screenify.app bundle
 npm run pack-app
 
-# Repack and install directly to /Applications/Screenify.app
+# Repack and install directly to /Applications/Screenify.app (ad-hoc signed)
 npm run install-app
+
+# Repack, sign with your Apple Development certificate, and install to /Applications/Screenify.app
+npm run sign-app
 ```
 
 Once installed, open **Screenify** from your `Applications` folder or Spotlight.

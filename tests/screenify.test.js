@@ -423,3 +423,33 @@ test("main/preload.js works inside Electron sandboxed renderers where require('p
   assert.equal(exposed.nodePath.resolve("/Users/test/a/b", "../c.mp4"), "/Users/test/a/c.mp4");
 });
 
+test("Xcode project (Screenify.xcodeproj) and native Swift helper targets are present and configured", () => {
+  const rootDir = path.join(__dirname, "..");
+  const pbxprojPath = path.join(rootDir, "Screenify.xcodeproj", "project.pbxproj");
+  const schemePath = path.join(
+    rootDir,
+    "Screenify.xcodeproj",
+    "xcshareddata",
+    "xcschemes",
+    "Screenify.xcscheme",
+  );
+  const getWindowsSwift = path.join(rootDir, "macos", "Sources", "GetWindows", "main.swift");
+  const activateWindowSwift = path.join(rootDir, "macos", "Sources", "ActivateWindow", "main.swift");
+  const xcodeTestsSwift = path.join(rootDir, "macos", "Tests", "ScreenifyTests", "ScreenifyXcodeTests.swift");
+  const xcodeBuildScript = path.join(rootDir, "scripts", "xcode-build-app.sh");
+
+  assert.ok(fs.existsSync(pbxprojPath), "Screenify.xcodeproj/project.pbxproj must exist");
+  assert.ok(fs.existsSync(schemePath), "Screenify.xcscheme must exist");
+  assert.ok(fs.existsSync(getWindowsSwift), "macos/Sources/GetWindows/main.swift must exist");
+  assert.ok(fs.existsSync(activateWindowSwift), "macos/Sources/ActivateWindow/main.swift must exist");
+  assert.ok(fs.existsSync(xcodeTestsSwift), "macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift must exist");
+  assert.ok(fs.existsSync(xcodeBuildScript), "scripts/xcode-build-app.sh must exist");
+
+  const pbxproj = fs.readFileSync(pbxprojPath, "utf8");
+  assert.ok(pbxproj.includes("scripts/entitlements.mac.plist"), "Xcode project must reference entitlements.mac.plist");
+  assert.ok(pbxproj.includes("get-windows-arm64"), "Xcode project must include get-windows-arm64 target");
+  assert.ok(pbxproj.includes("activate-window-arm64"), "Xcode project must include activate-window-arm64 target");
+  assert.ok(pbxproj.includes("ScreenifyTests"), "Xcode project must include ScreenifyTests XCTest target");
+});
+
+
