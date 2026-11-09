@@ -1,7 +1,36 @@
 "use strict";
 
 const { contextBridge, ipcRenderer } = require("electron");
-const path = require("path");
+const path = (() => {
+  try {
+    return require("path");
+  } catch {
+    const normalize = (p) => {
+      const isAbs = p.startsWith("/");
+      const parts = p.split("/").filter(Boolean);
+      const out = [];
+      for (const seg of parts) {
+        if (seg === ".") continue;
+        if (seg === "..") out.pop();
+        else out.push(seg);
+      }
+      return (isAbs ? "/" : "") + out.join("/") || (isAbs ? "/" : ".");
+    };
+    return {
+      join: (...args) => normalize(args.filter(Boolean).join("/")),
+      resolve: (...args) => {
+        let resolved = "";
+        for (let i = args.length - 1; i >= 0; i--) {
+          const p = String(args[i] || "");
+          if (!p) continue;
+          resolved = p + (resolved ? "/" + resolved : "");
+          if (p.startsWith("/")) break;
+        }
+        return normalize("/" + resolved);
+      },
+    };
+  }
+})();
 
 function registerIpcSubscriber(channel, callback, passData = true) {
   const handler = passData
@@ -12,7 +41,9 @@ function registerIpcSubscriber(channel, callback, passData = true) {
 }
 
 globalThis.global = globalThis;
-window.global = window;
+if (typeof window !== "undefined") {
+  window.global = window;
+}
 
 contextBridge.exposeInMainWorld("api", {
   startRecording: (config, options) =>
@@ -370,3 +401,17 @@ contextBridge.exposeInMainWorld("permissionsApi", {
   continueToApp: () => ipcRenderer.invoke("permissions-continue"),
   checkAll: () => ipcRenderer.invoke("check-all-permissions"),
 });
+
+contextBridge.exposeInMainWorld("electron", {
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL:
+      typeof process !== "undefined" && process.env
+        ? process.env.NEXT_PUBLIC_SUPABASE_URL
+        : undefined,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY:
+      typeof process !== "undefined" && process.env
+        ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        : undefined,
+  },
+});
+

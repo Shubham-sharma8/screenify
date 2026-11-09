@@ -342,4 +342,84 @@ test("Bugs 6-12 & Feature 4: main/index.js static & behavioral verification", ()
     code.includes("Copy Diagnostics Info"),
     "Main menu should include the new Tools menu with Copy Diagnostics Info",
   );
+
+  // Bug 17: Broken stdout/stderr (EIO/EPIPE) guard and uncaughtException re-entrancy guard
+  assert.ok(
+    code.includes("isStdioBroken") && code.includes("_safeStdioWrite"),
+    "main/index.js must guard stdout/stderr writes against EIO/EPIPE when terminal disconnects",
+  );
+  assert.ok(
+    code.includes("_isHandlingUncaughtException"),
+    "uncaughtException handler must prevent recursive re-entry",
+  );
+
+  // Bug 18: Permissions onboarding completion persisted in store
+  assert.ok(
+    code.includes('store["set"]("permissionsOnboardingCompleted", !![])'),
+    "permissions-continue must persist permissionsOnboardingCompleted in store",
+  );
+
+  // Bug 19: macOS entitlements plist and helper signing in install-macos-app.js
+  const entitlementsPlist = path.join(__dirname, "..", "scripts", "entitlements.mac.plist");
+  assert.ok(
+    fs.existsSync(entitlementsPlist),
+    "scripts/entitlements.mac.plist must exist for V8 JIT and macOS capture entitlements",
+  );
+  const plistContent = fs.readFileSync(entitlementsPlist, "utf8");
+  assert.ok(
+    plistContent.includes("com.apple.security.cs.allow-jit") &&
+      plistContent.includes("com.apple.security.device.screen-capture"),
+    "entitlements.mac.plist must include allow-jit and screen-capture entitlements",
+  );
+
+  // Bug 20: Editor presets directory uses userData instead of Documents to avoid macOS launchd TCC hang
+  const editorPresetsCode = fs.readFileSync(
+    path.join(__dirname, "..", "main", "editorPresets.js"),
+    "utf8",
+  );
+  assert.ok(
+    editorPresetsCode.includes('app.getPath("userData")') &&
+      !editorPresetsCode.includes('app.getPath("documents")'),
+    "editorPresets.js must use app.getPath('userData') to prevent macOS launchd TCC startup hangs",
+  );
 });
+
+test("main/preload.js works inside Electron sandboxed renderers where require('path') is unavailable", () => {
+  const vm = require("node:vm");
+  const preloadCode = fs.readFileSync(
+    path.join(__dirname, "..", "main", "preload.js"),
+    "utf8",
+  );
+  const exposed = {};
+  const sandbox = {
+    require: (mod) => {
+      if (mod === "electron") {
+        return {
+          contextBridge: {
+            exposeInMainWorld: (key, val) => {
+              exposed[key] = val;
+            },
+          },
+          ipcRenderer: {
+            invoke: () => Promise.resolve(),
+            send: () => {},
+            on: () => {},
+            removeListener: () => {},
+          },
+        };
+      }
+      throw new Error(`module not found: ${mod}`);
+    },
+    process: { env: {} },
+    console,
+  };
+  sandbox.globalThis = sandbox;
+  vm.runInNewContext(preloadCode, sandbox);
+
+  assert.ok(exposed.api, "window.api must be exposed in sandboxed preload");
+  assert.ok(exposed.nodePath, "window.nodePath must be exposed in sandboxed preload");
+  assert.ok(exposed.electron, "window.electron must be exposed in sandboxed preload");
+  assert.equal(exposed.nodePath.join("/Users/test/", "/project", "clip.mp4"), "/Users/test/project/clip.mp4");
+  assert.equal(exposed.nodePath.resolve("/Users/test/a/b", "../c.mp4"), "/Users/test/a/c.mp4");
+});
+

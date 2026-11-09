@@ -159,7 +159,7 @@ function registerEditorPresetIpc({
   log = console.log,
 }) {
   const getPresetsPath = () =>
-    path.join(app.getPath("documents"), PRESETS_FOLDER_NAME);
+    path.join(app.getPath("userData"), PRESETS_FOLDER_NAME);
 
   const ensurePresetsDir = () => {
     let dirPath = getPresetsPath();
@@ -168,16 +168,16 @@ function registerEditorPresetIpc({
     } catch {
       const fallbackBase =
         typeof app.getPath === "function"
-          ? app.getPath("userData")
+          ? app.getPath("temp")
           : process.cwd();
       dirPath = path.join(fallbackBase, PRESETS_FOLDER_NAME);
       fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    // Migrate any legacy "Screen Charm Presets" files if present
+    // Migrate any legacy "Screen Charm Presets" files inside userData if present
     try {
       const legacyDir = path.join(
-        app.getPath("documents"),
+        app.getPath("userData"),
         LEGACY_PRESETS_FOLDER_NAME,
       );
       if (fs.existsSync(legacyDir)) {

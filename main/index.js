@@ -1,6 +1,9 @@
 "use strict";
 function _0x2f96() {}
 const _0x46733d = _0x2f96;
+try {
+  process.chdir(require("os").homedir());
+} catch {}
 const {
     app,
     BrowserWindow,
@@ -1068,11 +1071,41 @@ async function getAnonymousId() {
   }));
 const posthog = process.env.POSTHOG_API_KEY ? new PostHog(process.env.POSTHOG_API_KEY, { host: process.env.POSTHOG_HOST || "https://eu.i.posthog.com", flushAt: 1, flushInterval: 0 }) : { capture() {}, flush() {} };
 let log;
-const _0x34e3fb = {};
-((_0x34e3fb["log"] = console["log"]),
-  (_0x34e3fb["error"] = console["error"]),
-  (_0x34e3fb["warn"] = console["warn"]),
-  (_0x34e3fb["debug"] = console["debug"]));
+let isStdioBroken = false;
+for (const _stdioStream of [process["stdout"], process["stderr"]]) {
+  if (_stdioStream && typeof _stdioStream["on"] === "function") {
+    _stdioStream["on"]("error", (_stdioErr) => {
+      if (
+        _stdioErr &&
+        (_stdioErr["code"] === "EIO" ||
+          _stdioErr["code"] === "EPIPE" ||
+          _stdioErr["code"] === "EBADF")
+      ) {
+        isStdioBroken = true;
+      }
+    });
+  }
+}
+const _rawConsole = {
+  log: console["log"].bind(console),
+  error: console["error"].bind(console),
+  warn: console["warn"].bind(console),
+  debug: console["debug"].bind(console),
+};
+function _safeStdioWrite(fn, args) {
+  if (isStdioBroken) return;
+  try {
+    fn(...args);
+  } catch (_err) {
+    isStdioBroken = true;
+  }
+}
+const _0x34e3fb = {
+  log: (...args) => _safeStdioWrite(_rawConsole.log, args),
+  error: (...args) => _safeStdioWrite(_rawConsole.error, args),
+  warn: (...args) => _safeStdioWrite(_rawConsole.warn, args),
+  debug: (...args) => _safeStdioWrite(_rawConsole.debug, args),
+};
 const originalConsole = _0x34e3fb,
   unpackedPath = path["join"](
     process["resourcesPath"],
@@ -1779,25 +1812,39 @@ function setupLogging() {
     }
     return (
       _0x157eaa["RSdHp"](_0x3af32b),
-      function _0xfca087(_0x7661f7) {
+      function _0xfca087(..._0x7661f7Args) {
         const _0x444817 = _0x79a3ef;
         _0x238a87();
-        const _0x326a3d = new Date()["toISOString"](),
+        const _0x7661f7 = _0x7661f7Args
+            .map((_arg) =>
+              _arg instanceof Error
+                ? _arg.stack || _arg.message
+                : typeof _arg === "object" && _arg !== null
+                  ? (() => {
+                      try {
+                        return JSON.stringify(_arg);
+                      } catch {
+                        return String(_arg);
+                      }
+                    })()
+                  : String(_arg),
+            )
+            .join(" "),
+          _0x326a3d = new Date()["toISOString"](),
           _0x2f9f54 = _0x326a3d + ":\x20" + _0x7661f7 + "\x0a";
         originalConsole["log"](_0x2f9f54["trim"]());
         try {
           fs["appendFileSync"](_0x1d2431, _0x2f9f54);
         } catch (_0x27b0b8) {
-          _0x157eaa["IJDCZ"]("AMIIq", "RNAlX")
-            ? _0x1ea325["appendFileSync"](_0x24f643, _0x2a2129)
-            : (originalConsole["error"](
-                "Failed to write log: " + _0x27b0b8["message"],
-              ),
-              mainWindow &&
-                mainWindow["webContents"]["send"](
-                  "logging-error",
-                  _0x27b0b8["message"],
-                ));
+          originalConsole["error"](
+            "Failed to write log: " + _0x27b0b8["message"],
+          );
+          if (mainWindow && !mainWindow["isDestroyed"]()) {
+            mainWindow["webContents"]["send"](
+              "logging-error",
+              _0x27b0b8["message"],
+            );
+          }
         }
       }
     );
@@ -10381,7 +10428,7 @@ function playStartChime() {
     log("⚠️ Start chime failed: " + _0x2193e6["message"]);
   }
 }
-async function createPermissionsWindow() {
+async function createPermissionsWindow(forceShow = false) {
   const _0x35828a = _0x46733d,
     _0x6fa124 = {
       nbLus: function (_0x4d8991, _0x5023ce) {
@@ -10407,12 +10454,22 @@ async function createPermissionsWindow() {
       UmCir: "✅ Permissions window shown",
     },
     _0x52f177 = systemPreferences["getMediaAccessStatus"]("screen"),
-    _0x54f5be = systemPreferences["isTrustedAccessibilityClient"](![]);
-  if (_0x6fa124["zIjza"](_0x52f177, "granted") && _0x54f5be) {
+    _0x54f5be = systemPreferences["isTrustedAccessibilityClient"](![]),
+    _onboardingDone = Boolean(store["get"]("permissionsOnboardingCompleted"));
+  if (
+    !forceShow &&
+    ((_0x6fa124["zIjza"](_0x52f177, "granted") && _0x54f5be) ||
+      _onboardingDone)
+  ) {
     (log(
-      "✅\x20Required\x20permissions\x20already\x20granted\x20—\x20skipping\x20permissions\x20window",
+      "✅\x20Permissions\x20ready\x20or\x20onboarding\x20completed\x20—\x20opening\x20main\x20window",
     ),
       createMainWindow());
+    return;
+  }
+  if (permissionsWindow && !permissionsWindow["isDestroyed"]()) {
+    permissionsWindow["show"]();
+    permissionsWindow["focus"]();
     return;
   }
   const { width: _0x3cdd59, height: _0x590ae9 } =
@@ -13101,9 +13158,15 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
     },
   ),
   ipcMain["handle"]("permissions-continue", async () => {
+    store["set"]("permissionsOnboardingCompleted", !![]);
     const winToClose = permissionsWindow;
     permissionsWindow = null;
-    await createMainWindow();
+    if (!mainWindow || mainWindow["isDestroyed"]()) {
+      await createMainWindow();
+    } else {
+      mainWindow["show"]();
+      mainWindow["focus"]();
+    }
     if (winToClose && !winToClose["isDestroyed"]()) {
       winToClose["close"]();
     }
@@ -13844,8 +13907,7 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
                 ? _0x24e8f8
                 : JSON["stringify"](_0x24e8f8),
             )["join"]("\x20");
-          (_0x23ad09["fzKmC"](log, "[CONSOLE.LOG] " + _0x4227cf),
-            originalConsole["log"]["apply"](console, _0x181e41));
+          _0x23ad09["fzKmC"](log, "[CONSOLE.LOG] " + _0x4227cf);
         }),
         (console["error"] = (..._0x5ea4a5) => {
           const _0x5b7378 = _0x4b2303,
@@ -13857,8 +13919,7 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
                 ? _0x4d255f
                 : JSON["stringify"](_0x4d255f);
             })["join"]("\x20");
-          (_0x23ad09["xBrpw"](log, "[CONSOLE.ERROR] " + _0x237bd6),
-            originalConsole["error"]["apply"](console, _0x5ea4a5));
+          _0x23ad09["xBrpw"](log, "[CONSOLE.ERROR] " + _0x237bd6);
         }),
         (console["warn"] = (..._0x306469) => {
           const _0x118715 = _0x4b2303,
@@ -13867,8 +13928,7 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
                 ? _0x3b2d25
                 : JSON["stringify"](_0x3b2d25),
             )["join"]("\x20");
-          (_0x23ad09["fzKmC"](log, "[CONSOLE.WARN] " + _0x2cb3af),
-            originalConsole["warn"]["apply"](console, _0x306469));
+          _0x23ad09["fzKmC"](log, "[CONSOLE.WARN] " + _0x2cb3af);
         }),
         (console["debug"] = (..._0x4df2d3) => {
           const _0xcfd5bd = _0x4b2303,
@@ -13877,8 +13937,7 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
                 ? _0x2ae164
                 : JSON["stringify"](_0x2ae164),
             )["join"]("\x20");
-          (_0x23ad09["xBrpw"](log, "[CONSOLE.DEBUG] " + _0x18864c),
-            originalConsole["debug"]["apply"](console, _0x4df2d3));
+          _0x23ad09["xBrpw"](log, "[CONSOLE.DEBUG] " + _0x18864c);
         }),
         originalConsole["log"](
           "[MAIN_PROCESS] Console methods overridden to also log to file via global log().",
@@ -13969,7 +14028,7 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
             accelerator: "CmdOrCtrl+Shift+P",
             click: () => {
               const presetsDir = path["join"](
-                app["getPath"]("documents"),
+                app["getPath"]("userData"),
                 "Screenify Presets",
               );
               fs["mkdirSync"](presetsDir, { recursive: true });
@@ -13993,6 +14052,14 @@ let LOG_DIR_EXISTS_AT_STARTUP = ![];
               } catch (err) {
                 log("Failed to open Teleprompter from menu: " + err["message"]);
               }
+            },
+          },
+          {
+            label: "Permissions Setup…",
+            click: () => {
+              createPermissionsWindow(true)["catch"]((err) =>
+                log("Failed to open Permissions window: " + err["message"]),
+              );
             },
           },
           {
@@ -15939,20 +16006,46 @@ function posthogCapture(_0x4f6c61, _0x2b3aa6) {
   posthogCapture(_0xdb1ada, _0x2611b0);
 }),
   process["on"]("uncaughtException", (_0x4f7662) => {
-    const _0x2e389b = _0x46733d,
-      _0x25d98b = {
-        NILHS: "uncaughtException ",
-        BGsXL: function (_0x48c911, _0x518c31, _0x2891d7) {
-          return _0x48c911(_0x518c31, _0x2891d7);
-        },
-        kZywT: "app_error",
-      };
-    log("uncaughtException " + _0x4f7662["message"]);
-    const _0x415803 = {};
-    ((_0x415803["error_message"] = _0x4f7662["message"]),
-      (_0x415803["error_stack"] = _0x4f7662["stack"]),
-      _0x25d98b["BGsXL"](posthogCapture, "app_error", _0x415803),
-      posthog["flush"]());
+    if (
+      _0x4f7662 &&
+      (_0x4f7662["code"] === "EIO" ||
+        _0x4f7662["code"] === "EPIPE" ||
+        _0x4f7662["code"] === "EBADF" ||
+        /write E(IO|PIPE|BADF)/i.test(_0x4f7662["message"] || ""))
+    ) {
+      isStdioBroken = true;
+      return;
+    }
+    if (process["_isHandlingUncaughtException"]) return;
+    process["_isHandlingUncaughtException"] = true;
+    try {
+      const _0x2e389b = _0x46733d,
+        _0x25d98b = {
+          NILHS: "uncaughtException ",
+          BGsXL: function (_0x48c911, _0x518c31, _0x2891d7) {
+            return _0x48c911(_0x518c31, _0x2891d7);
+          },
+          kZywT: "app_error",
+        };
+      if (typeof log === "function") {
+        log("uncaughtException " + (_0x4f7662?.["message"] || _0x4f7662));
+      }
+      const _0x415803 = {};
+      ((_0x415803["error_message"] = _0x4f7662?.["message"]),
+        (_0x415803["error_stack"] = _0x4f7662?.["stack"]),
+        _0x25d98b["BGsXL"](posthogCapture, "app_error", _0x415803),
+        posthog["flush"]());
+    } finally {
+      process["_isHandlingUncaughtException"] = false;
+    }
+  }),
+  process["on"]("unhandledRejection", (_reason) => {
+    if (typeof log === "function") {
+      log(
+        "unhandledRejection " +
+          (_reason instanceof Error ? _reason.stack || _reason.message : String(_reason)),
+      );
+    }
   }),
   ipcMain["handle"]("requestCameraAccess", async () => {
     const _0x282514 = _0x46733d,
@@ -20263,7 +20356,7 @@ let fileTypeToRender = null,
     isTextInputFocused = !!_0x41e380;
   }));
 const videoStreams = new Map();
-let exportSaveDir = path["join"](os["homedir"](), "Documents");
+let exportSaveDir = getScreenCharmProjectsDirectory();
 function getExportFilePath(_0x2be628 = null) {
   const _0xfe75a = _0x46733d,
     _0x3dc68f = {};

@@ -49,6 +49,16 @@ function repackScreenifyBundle({ srcRoot, appBundlePath, installToApplications }
     .digest("hex");
   const header = JSON.parse(origBuf.slice(16, 16 + origU3).toString("utf8"));
 
+  const mainDir = path.join(srcRoot, "main");
+  if (fs.existsSync(mainDir) && header.files && header.files.main && header.files.main.files) {
+    for (const entry of fs.readdirSync(mainDir)) {
+      const fullPath = path.join(mainDir, entry);
+      if (fs.statSync(fullPath).isFile() && !header.files.main.files[entry]) {
+        header.files.main.files[entry] = { size: 0, offset: "0" };
+      }
+    }
+  }
+
   const payloadChunks = [];
   let currentOffset = 0n;
 
@@ -121,10 +131,52 @@ function repackScreenifyBundle({ srcRoot, appBundlePath, installToApplications }
   plist = plist.replace(oldHeaderHash, newHeaderHash);
   fs.writeFileSync(plistPath, plist, "utf8");
 
+  const entitlementsPath = path.join(__dirname, "entitlements.mac.plist");
   execFileSync("xattr", ["-cr", appBundlePath], { stdio: "inherit" });
+
+  // Step 1: Deep-sign all nested frameworks, dylibs, and Mach-O helpers
   execFileSync(
     "codesign",
     ["--force", "--deep", "--sign", "-", appBundlePath],
+    { stdio: "inherit" },
+  );
+
+  // Step 2: Sign each Electron Helper bundle with entitlements (V8 JIT, media capture)
+  const helperApps = [
+    "Screenify Helper (Renderer).app",
+    "Screenify Helper (GPU).app",
+    "Screenify Helper (Plugin).app",
+    "Screenify Helper.app",
+  ];
+  for (const helperName of helperApps) {
+    const helperPath = path.join(appBundlePath, "Contents/Frameworks", helperName);
+    if (fs.existsSync(helperPath)) {
+      execFileSync(
+        "codesign",
+        [
+          "--force",
+          "--sign",
+          "-",
+          "--entitlements",
+          entitlementsPath,
+          helperPath,
+        ],
+        { stdio: "inherit" },
+      );
+    }
+  }
+
+  // Step 3: Sign the top-level app bundle (without --deep so helper entitlements remain intact)
+  execFileSync(
+    "codesign",
+    [
+      "--force",
+      "--sign",
+      "-",
+      "--entitlements",
+      entitlementsPath,
+      appBundlePath,
+    ],
     { stdio: "inherit" },
   );
   execFileSync("codesign", ["--verify", "--deep", "--strict", appBundlePath], {
