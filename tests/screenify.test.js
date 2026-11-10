@@ -446,10 +446,14 @@ test("Xcode project (Screenify.xcodeproj) and native Swift helper targets are pr
   assert.ok(fs.existsSync(xcodeBuildScript), "scripts/xcode-build-app.sh must exist");
 
   const pbxproj = fs.readFileSync(pbxprojPath, "utf8");
+  const buildScript = fs.readFileSync(xcodeBuildScript, "utf8");
   assert.ok(pbxproj.includes("scripts/entitlements.mac.plist"), "Xcode project must reference entitlements.mac.plist");
   assert.ok(pbxproj.includes("get-windows-arm64"), "Xcode project must include get-windows-arm64 target");
   assert.ok(pbxproj.includes("activate-window-arm64"), "Xcode project must include activate-window-arm64 target");
   assert.ok(pbxproj.includes("ScreenifyTests"), "Xcode project must include ScreenifyTests XCTest target");
+  assert.ok(!pbxproj.includes("$(ARCHS_STANDARD)"), "Xcode project must lock ARCHS = arm64 for Apple Silicon Electron bundle");
+  assert.ok(!pbxproj.includes("dwarf-with-dsym"), "Xcode project must not run dsymutil against prebuilt Electron binary");
+  assert.ok(buildScript.includes(".nvm/versions/node"), "xcode-build-app.sh must resolve nvm Node.js binary when launched from Xcode GUI");
 });
 
 test("White Minimal Apple System UI Redesign (Helium-inspired light aesthetic, SF Pro font stack, zero neon)", () => {

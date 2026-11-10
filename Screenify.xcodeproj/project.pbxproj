@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10000010000000000000001 /* ScreenifyBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000001 /* ScreenifyBridge.swift */; };
-		A10000020000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000020000000000000001 /* main.swift */; };
-		A10000030000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000030000000000000001 /* main.swift */; };
-		A10000040000000000000001 /* ScreenifyXcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000040000000000000001 /* ScreenifyXcodeTests.swift */; };
+		A10000010000000000000001 /* macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000010000000000000001 /* macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift */; };
+		A10000020000000000000001 /* GetWindows.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000020000000000000001 /* GetWindows.swift */; };
+		A10000030000000000000001 /* ActivateWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000030000000000000001 /* ActivateWindow.swift */; };
+		A10000040000000000000001 /* macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000040000000000000001 /* macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,27 +38,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A20000010000000000000001 /* ScreenifyBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift"; sourceTree = "<group>"; };
-		A20000020000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "GetWindows.swift"; path = "macos/Sources/GetWindows/main.swift"; sourceTree = "<group>"; };
-		A20000030000000000000001 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ActivateWindow.swift"; path = "macos/Sources/ActivateWindow/main.swift"; sourceTree = "<group>"; };
-		A20000040000000000000001 /* ScreenifyXcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift"; sourceTree = "<group>"; };
-		A20000050000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "macos/Info.plist"; sourceTree = "<group>"; };
-		A20000060000000000000001 /* entitlements.mac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "scripts/entitlements.mac.plist"; sourceTree = "<group>"; };
+		A20000010000000000000001 /* macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift; sourceTree = "<group>"; };
+		A20000020000000000000001 /* GetWindows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetWindows.swift; path = macos/Sources/GetWindows/main.swift; sourceTree = "<group>"; };
+		A20000030000000000000001 /* ActivateWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivateWindow.swift; path = macos/Sources/ActivateWindow/main.swift; sourceTree = "<group>"; };
+		A20000040000000000000001 /* macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift; sourceTree = "<group>"; };
+		A20000050000000000000001 /* macos/Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = macos/Info.plist; sourceTree = "<group>"; };
+		A20000060000000000000001 /* scripts/entitlements.mac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = scripts/entitlements.mac.plist; sourceTree = "<group>"; };
 		A20000070000000000000001 /* Screenify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Screenify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000080000000000000001 /* get-windows-arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "get-windows-arm64"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000090000000000000001 /* activate-window-arm64 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "activate-window-arm64"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A200000A0000000000000001 /* ScreenifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A20000100000000000000001 /* index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/index.js"; sourceTree = "<group>"; };
-		A20000110000000000000001 /* preload.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/preload.js"; sourceTree = "<group>"; };
-		A20000120000000000000001 /* cursorMotionPipeline.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/cursorMotionPipeline.js"; sourceTree = "<group>"; };
-		A20000130000000000000001 /* subtitleTranscription.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/subtitleTranscription.js"; sourceTree = "<group>"; };
-		A20000140000000000000001 /* aiEditService.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/aiEditService.js"; sourceTree = "<group>"; };
-		A20000150000000000000001 /* editorPresets.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/editorPresets.js"; sourceTree = "<group>"; };
-		A20000160000000000000001 /* editorPresetSettings.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/editorPresetSettings.js"; sourceTree = "<group>"; };
-		A20000170000000000000001 /* teleprompter.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "main/teleprompter.js"; sourceTree = "<group>"; };
-		A20000180000000000000001 /* install-macos-app.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "scripts/install-macos-app.js"; sourceTree = "<group>"; };
-		A20000190000000000000001 /* xcode-build-app.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "scripts/xcode-build-app.sh"; sourceTree = "<group>"; };
-		A200001A0000000000000001 /* screenify.test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "tests/screenify.test.js"; sourceTree = "<group>"; };
+		A20000100000000000000001 /* main/index.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/index.js; sourceTree = "<group>"; };
+		A20000110000000000000001 /* main/preload.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/preload.js; sourceTree = "<group>"; };
+		A20000120000000000000001 /* main/cursorMotionPipeline.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/cursorMotionPipeline.js; sourceTree = "<group>"; };
+		A20000130000000000000001 /* main/subtitleTranscription.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/subtitleTranscription.js; sourceTree = "<group>"; };
+		A20000140000000000000001 /* main/aiEditService.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/aiEditService.js; sourceTree = "<group>"; };
+		A20000150000000000000001 /* main/editorPresets.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/editorPresets.js; sourceTree = "<group>"; };
+		A20000160000000000000001 /* main/editorPresetSettings.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/editorPresetSettings.js; sourceTree = "<group>"; };
+		A20000170000000000000001 /* main/teleprompter.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = main/teleprompter.js; sourceTree = "<group>"; };
+		A20000180000000000000001 /* scripts/install-macos-app.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "scripts/install-macos-app.js"; sourceTree = "<group>"; };
+		A20000190000000000000001 /* scripts/xcode-build-app.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "scripts/xcode-build-app.sh"; sourceTree = "<group>"; };
+		A200001A0000000000000001 /* tests/screenify.test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = tests/screenify.test.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,11 +107,11 @@
 		A60000020000000000000001 /* macOS Native (Swift & Signing) */ = {
 			isa = PBXGroup;
 			children = (
-				A20000010000000000000001 /* ScreenifyBridge.swift */,
-				A20000020000000000000001 /* main.swift */,
-				A20000030000000000000001 /* main.swift */,
-				A20000050000000000000001 /* Info.plist */,
-				A20000060000000000000001 /* entitlements.mac.plist */,
+				A20000010000000000000001 /* macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift */,
+				A20000020000000000000001 /* GetWindows.swift */,
+				A20000030000000000000001 /* ActivateWindow.swift */,
+				A20000050000000000000001 /* macos/Info.plist */,
+				A20000060000000000000001 /* scripts/entitlements.mac.plist */,
 			);
 			name = "macOS Native (Swift & Signing)";
 			sourceTree = "<group>";
@@ -119,14 +119,14 @@
 		A60000030000000000000001 /* Electron Main Process (JS) */ = {
 			isa = PBXGroup;
 			children = (
-				A20000100000000000000001 /* index.js */,
-				A20000110000000000000001 /* preload.js */,
-				A20000120000000000000001 /* cursorMotionPipeline.js */,
-				A20000130000000000000001 /* subtitleTranscription.js */,
-				A20000140000000000000001 /* aiEditService.js */,
-				A20000150000000000000001 /* editorPresets.js */,
-				A20000160000000000000001 /* editorPresetSettings.js */,
-				A20000170000000000000001 /* teleprompter.js */,
+				A20000100000000000000001 /* main/index.js */,
+				A20000110000000000000001 /* main/preload.js */,
+				A20000120000000000000001 /* main/cursorMotionPipeline.js */,
+				A20000130000000000000001 /* main/subtitleTranscription.js */,
+				A20000140000000000000001 /* main/aiEditService.js */,
+				A20000150000000000000001 /* main/editorPresets.js */,
+				A20000160000000000000001 /* main/editorPresetSettings.js */,
+				A20000170000000000000001 /* main/teleprompter.js */,
 			);
 			name = "Electron Main Process (JS)";
 			sourceTree = "<group>";
@@ -134,8 +134,8 @@
 		A60000040000000000000001 /* Build & Packaging Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				A20000180000000000000001 /* install-macos-app.js */,
-				A20000190000000000000001 /* xcode-build-app.sh */,
+				A20000180000000000000001 /* scripts/install-macos-app.js */,
+				A20000190000000000000001 /* scripts/xcode-build-app.sh */,
 			);
 			name = "Build & Packaging Scripts";
 			sourceTree = "<group>";
@@ -143,8 +143,8 @@
 		A60000050000000000000001 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A20000040000000000000001 /* ScreenifyXcodeTests.swift */,
-				A200001A0000000000000001 /* screenify.test.js */,
+				A20000040000000000000001 /* macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift */,
+				A200001A0000000000000001 /* tests/screenify.test.js */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -295,11 +295,13 @@
 			);
 			inputPaths = (
 				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
 			);
 			name = "Assemble & Sign Screenify Electron Bundle";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(WRAPPER_NAME)/Contents/Resources/app.asar",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
@@ -312,7 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000010000000000000001 /* ScreenifyBridge.swift in Sources */,
+				A10000010000000000000001 /* macos/Sources/ScreenifyLauncher/ScreenifyBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000020000000000000001 /* main.swift in Sources */,
+				A10000020000000000000001 /* GetWindows.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000030000000000000001 /* main.swift in Sources */,
+				A10000030000000000000001 /* ActivateWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +338,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000040000000000000001 /* ScreenifyXcodeTests.swift in Sources */,
+				A10000040000000000000001 /* macos/Tests/ScreenifyTests/ScreenifyXcodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,16 +400,20 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.12.0;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXCLUDED_ARCHS = x86_64;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -417,78 +423,102 @@
 		AB0000110000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "scripts/entitlements.mac.plist";
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = scripts/entitlements.mac.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
 				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = x86_64;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "macos/Info.plist";
+				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		AB0000120000000000000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "scripts/entitlements.mac.plist";
+				ARCHS = arm64;
+				CODE_SIGN_ENTITLEMENTS = scripts/entitlements.mac.plist;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
 				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = x86_64;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "macos/Info.plist";
+				INFOPLIST_FILE = macos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.screenCharm.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Release;
 		};
 		AB0000210000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				EXCLUDED_ARCHS = x86_64;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		AB0000220000000000000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				EXCLUDED_ARCHS = x86_64;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		AB0000310000000000000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				EXCLUDED_ARCHS = x86_64;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		AB0000320000000000000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9TKKPN6F59;
+				EXCLUDED_ARCHS = x86_64;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

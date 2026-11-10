@@ -1,7 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
-export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH:-}"
+# Add Homebrew, /usr/local, Volta, fnm, asdf, and nvm Node.js bins so Xcode GUI builds always find node
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${HOME}/.volta/bin:${HOME}/.asdf/shims:${HOME}/.local/share/fnm:${PATH:-}"
+if [ -d "${HOME}/.nvm/versions/node" ]; then
+  LATEST_NVM_NODE_BIN="$(ls -1d "${HOME}/.nvm/versions/node/"*/bin 2>/dev/null | tail -n 1 || true)"
+  if [ -n "${LATEST_NVM_NODE_BIN}" ]; then
+    export PATH="${LATEST_NVM_NODE_BIN}:${PATH}"
+  fi
+fi
+
+NODE_BIN="$(command -v node || true)"
+if [ -z "${NODE_BIN}" ]; then
+  echo "error: Could not find 'node' binary in PATH (${PATH}). Install Node.js via Homebrew or nvm." >&2
+  exit 1
+fi
 
 SRC_ROOT="${SRCROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 DEST_APP="${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}"
@@ -56,5 +69,5 @@ if [ -z "${SIGN_ID}" ]; then
   SIGN_ID="-"
 fi
 
-SCREENIFY_APP_BUNDLE="${DEST_APP}" CODESIGN_IDENTITY="${SIGN_ID}" node "${SRC_ROOT}/scripts/install-macos-app.js"
+SCREENIFY_APP_BUNDLE="${DEST_APP}" CODESIGN_IDENTITY="${SIGN_ID}" "${NODE_BIN}" "${SRC_ROOT}/scripts/install-macos-app.js"
 echo "✅ Xcode Screenify.app assembly and signing complete (${DEST_APP})"
