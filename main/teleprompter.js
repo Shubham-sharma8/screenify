@@ -17,17 +17,18 @@ function getTeleprompterHtml() {
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{
     width:100%;height:100%;overflow:hidden;background:transparent;
-    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',system-ui,sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text',system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;
+    color:#111110;
   }
   .window{
     width:100%;height:100%;
-    background:rgba(16,16,18,var(--bg-opacity, 0.96));
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,0.09);
+    background:rgba(255,255,255,var(--bg-opacity, 0.96));
+    border-radius:18px;
+    border:1px solid #e4e4e0;
     display:flex;flex-direction:column;overflow:hidden;
-    backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);
-    box-shadow:0 24px 80px rgba(0,0,0,0.7),0 0 0 0.5px rgba(255,255,255,0.04) inset;
+    backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);
+    box-shadow:0 1px 3px rgba(0,0,0,0.06),0 18px 48px -8px rgba(0,0,0,0.14);
   }
 
   /* ── Titlebar ── */
@@ -35,26 +36,29 @@ function getTeleprompterHtml() {
     -webkit-app-region:drag;
     display:flex;align-items:center;justify-content:space-between;
     padding:10px 14px 8px;flex-shrink:0;gap:8px;
+    border-bottom:1px solid #f0f0ed;
+    background:rgba(247,247,246,0.75);
   }
   .close-dot{
     -webkit-app-region:no-drag;
     width:12px;height:12px;border-radius:50%;
-    background:#3a3a3c;border:none;cursor:pointer;
-    transition:background 150ms;flex-shrink:0;
+    background:#ff5f57;border:0.5px solid rgba(0,0,0,0.12);cursor:pointer;
+    transition:opacity 150ms;flex-shrink:0;
   }
-  .close-dot:hover{background:#ff5f57}
+  .close-dot:hover{opacity:0.85}
   .titlebar-center{
     display:flex;flex-direction:column;align-items:center;flex:1;pointer-events:none;
   }
   .titlebar-title{
     font-size:11px;font-weight:600;
-    color:rgba(255,255,255,0.42);
-    letter-spacing:0.06em;text-transform:uppercase;
+    color:#111110;
+    letter-spacing:-0.01em;
   }
   .script-stats{
-    font-size:10px;font-weight:400;
-    color:rgba(255,255,255,0.28);
-    margin-top:2px;
+    font-size:10px;font-weight:500;
+    color:#787874;
+    margin-top:1px;
+    font-variant-numeric:tabular-nums;
   }
   .titlebar-actions{
     -webkit-app-region:no-drag;
@@ -63,12 +67,12 @@ function getTeleprompterHtml() {
   .edit-dot{
     -webkit-app-region:no-drag;
     width:26px;height:26px;border-radius:8px;background:none;
-    border:none;cursor:pointer;color:rgba(255,255,255,0.32);
+    border:none;cursor:pointer;color:#676764;
     display:flex;align-items:center;justify-content:center;
     transition:all 150ms;flex-shrink:0;
   }
-  .edit-dot:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75)}
-  .edit-dot.active{color:#60a5fa;background:rgba(96,165,250,0.12)}
+  .edit-dot:hover{background:#ededeb;color:#111110}
+  .edit-dot.active{color:#ffffff;background:#111110}
   .edit-dot svg{width:13px;height:13px}
 
   /* ── Text body ── */
@@ -82,79 +86,86 @@ function getTeleprompterHtml() {
   .scroll-content{
     position:absolute;top:0;left:0;width:100%;
     will-change:transform;
-    padding:10px 20px 200px;
+    padding:14px 22px 200px;
   }
   .text-display{
     white-space:pre-wrap;word-break:break-word;
-    line-height:1.65;color:rgba(255,255,255,0.9);
-    font-weight:400;
+    line-height:1.6;color:#111110;
+    font-weight:500;
+    letter-spacing:-0.015em;
     transition:transform 150ms ease;
   }
 
   .fade-top,.fade-bottom{
-    position:absolute;left:0;right:0;height:36px;pointer-events:none;z-index:2;
+    position:absolute;left:0;right:0;height:32px;pointer-events:none;z-index:2;
   }
-  .fade-top{top:0;background:linear-gradient(to bottom,rgba(16,16,18,0.95) 0%,transparent 100%)}
-  .fade-bottom{bottom:0;background:linear-gradient(to top,rgba(16,16,18,0.95) 0%,transparent 100%)}
+  .fade-top{top:0;background:linear-gradient(to bottom,rgba(255,255,255,0.96) 0%,transparent 100%)}
+  .fade-bottom{bottom:0;background:linear-gradient(to top,rgba(255,255,255,0.96) 0%,transparent 100%)}
 
   .editor-area{
     position:absolute;inset:0;display:none;flex-direction:column;
   }
   textarea{
     flex:1;background:transparent;border:none;outline:none;resize:none;
-    color:rgba(255,255,255,0.85);
-    padding:10px 20px 20px;
-    font-family:inherit;line-height:1.65;
-    caret-color:rgba(255,255,255,0.65);
+    color:#111110;
+    padding:14px 22px 20px;
+    font-family:inherit;line-height:1.6;font-weight:450;
+    letter-spacing:-0.01em;
+    caret-color:#111110;
     transition:transform 150ms ease;
   }
-  textarea::placeholder{color:rgba(255,255,255,0.22)}
+  textarea::placeholder{color:#9a9a95}
 
   /* ── Bottom toolbar ── */
   .toolbar{
     -webkit-app-region:no-drag;
     display:flex;align-items:center;justify-content:space-between;
-    padding:8px 14px 12px;flex-shrink:0;
+    padding:8px 14px 10px;flex-shrink:0;
     gap:6px;
+    border-top:1px solid #f0f0ed;
+    background:rgba(247,247,246,0.75);
   }
   .tb-group{display:flex;align-items:center;gap:4px}
 
   .tb-btn{
-    width:28px;height:28px;background:none;border:none;cursor:pointer;
-    border-radius:7px;
-    color:rgba(255,255,255,0.38);
+    width:28px;height:28px;background:#ffffff;border:1px solid #e4e4e0;cursor:pointer;
+    border-radius:8px;
+    color:#454542;
     display:flex;align-items:center;justify-content:center;
     transition:all 150ms;flex-shrink:0;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
   }
-  .tb-btn:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75)}
+  .tb-btn:hover{background:#f2f2ef;color:#111110;border-color:#d4d4cf}
   .tb-btn svg{width:13px;height:13px}
 
   .tb-val{
-    font-size:11px;font-weight:500;
-    color:rgba(255,255,255,0.32);
+    font-size:11px;font-weight:600;
+    color:#555552;
     min-width:34px;text-align:center;
-    letter-spacing:0.02em;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:0.01em;
     pointer-events:none;
   }
 
   .opacity-slider{
-    width:54px;height:4px;accent-color:#60a5fa;cursor:pointer;opacity:0.75;
+    width:54px;height:4px;accent-color:#111110;cursor:pointer;opacity:0.75;
   }
   .opacity-slider:hover{opacity:1}
 
   .play-btn{
     width:36px;height:36px;border-radius:50%;
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.14);
+    background:#111110;
+    border:1px solid #111110;
     cursor:pointer;
     display:flex;align-items:center;justify-content:center;
     transition:all 180ms;
-    color:rgba(255,255,255,0.92);
+    color:#ffffff;
     flex-shrink:0;
+    box-shadow:0 2px 6px rgba(0,0,0,0.12);
   }
-  .play-btn:hover{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.24);transform:scale(1.06)}
+  .play-btn:hover{background:#272725;border-color:#272725;transform:scale(1.05)}
   .play-btn:active{transform:scale(0.96)}
-  .play-btn.playing{background:rgba(96,165,250,0.22);border-color:rgba(96,165,250,0.4)}
+  .play-btn.playing{background:#ef4444;border-color:#ef4444}
   .play-btn svg{width:14px;height:14px}
 </style>
 </head>
@@ -528,7 +539,11 @@ function createTeleprompterWindow(store, getSafeWindowPosition, log) {
     },
   });
 
-  teleprompterWindow.setContentProtection(true);
+  const noProtection =
+    process.argv.includes("--no-editor-protection") ||
+    process.env.SCREENIFY_NO_EDITOR_PROTECTION === "1" ||
+    process.env.SCREENCHARM_NO_EDITOR_PROTECTION === "1";
+  teleprompterWindow.setContentProtection(!noProtection);
 
   teleprompterWindow.on("moved", () => {
     if (teleprompterWindow && !teleprompterWindow.isDestroyed()) {
@@ -623,7 +638,12 @@ function registerTeleprompterIpc(store, getSafeWindowPosition, log) {
   });
 }
 
+function getTeleprompterWindow() {
+  return teleprompterWindow;
+}
+
 module.exports = {
   registerTeleprompterIpc,
   createTeleprompterWindow,
+  getTeleprompterWindow,
 };

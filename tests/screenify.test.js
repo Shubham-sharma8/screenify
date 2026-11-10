@@ -452,4 +452,59 @@ test("Xcode project (Screenify.xcodeproj) and native Swift helper targets are pr
   assert.ok(pbxproj.includes("ScreenifyTests"), "Xcode project must include ScreenifyTests XCTest target");
 });
 
+test("White Minimal Apple System UI Redesign (Helium-inspired light aesthetic, SF Pro font stack, zero neon)", () => {
+  const rootDir = path.join(__dirname, "..");
+  const fontCss = fs.readFileSync(
+    path.join(rootDir, "out/_next/static/css/a6fc798b75e96a95.css"),
+    "utf8",
+  );
+  const themeCss = fs.readFileSync(
+    path.join(rootDir, "out/_next/static/css/ce6e24bd3e20f5eb.css"),
+    "utf8",
+  );
+  const recorderJs = fs.readFileSync(
+    path.join(rootDir, "out/_next/static/chunks/811.09baa8a76e2fdd46.js"),
+    "utf8",
+  );
+  const studioJs = fs.readFileSync(
+    path.join(rootDir, "out/_next/static/chunks/377.8b0a5790b003436b.js"),
+    "utf8",
+  );
+  const teleprompterJs = fs.readFileSync(
+    path.join(rootDir, "main/teleprompter.js"),
+    "utf8",
+  );
+  const indexJs = fs.readFileSync(path.join(rootDir, "main/index.js"), "utf8");
+
+  assert.ok(
+    fontCss.includes('-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text"'),
+    "Typography CSS must use Apple System UI font stack",
+  );
+  assert.ok(
+    themeCss.includes("Primary & Accent Replacements — Zero Neon"),
+    "Global stylesheet must include White Minimal Apple System UI overrides",
+  );
+  assert.ok(
+    themeCss.includes("--background: 60 5% 96.8% !important"),
+    "Global stylesheet must enforce warm white/stone background token",
+  );
+  assert.ok(
+    recorderJs.includes('document.documentElement.classList.remove("dark")'),
+    "Floating recorder bar must enforce light mode",
+  );
+  assert.ok(
+    studioJs.includes('defaultTheme:"light",forcedTheme:"light"'),
+    "Studio video editor must enforce light theme",
+  );
+  assert.ok(
+    teleprompterJs.includes("rgba(255,255,255,var(--bg-opacity, 0.96))"),
+    "Teleprompter window must use minimal white surface",
+  );
+  assert.ok(
+    indexJs.includes('backgroundColor: "#f7f7f6"'),
+    "Permissions window must use warm stone light background",
+  );
+});
+
+
 

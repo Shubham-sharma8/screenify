@@ -187,8 +187,14 @@ function repackScreenifyBundle({
     }
 
     let fileBuf;
-    if (relPath === "package.json" || relPath.startsWith("main/")) {
-      fileBuf = fs.readFileSync(path.join(srcRoot, relPath));
+    const srcCandidate = path.join(srcRoot, relPath);
+    if (
+      (relPath === "package.json" ||
+        relPath.startsWith("main/") ||
+        relPath.startsWith("out/")) &&
+      fs.existsSync(srcCandidate)
+    ) {
+      fileBuf = fs.readFileSync(srcCandidate);
     } else {
       const oldOffset = Number(node.offset);
       const oldSize = Number(node.size);
@@ -256,6 +262,12 @@ function repackScreenifyBundle({
       `$1${newHeaderHash}$2`,
     );
     fs.writeFileSync(macosTemplatePlist, templatePlist, "utf8");
+  }
+
+  const srcOutDir = path.join(srcRoot, "out");
+  const bundleOutDir = path.join(appBundlePath, "Contents/Resources/out");
+  if (fs.existsSync(srcOutDir)) {
+    fs.cpSync(srcOutDir, bundleOutDir, { recursive: true });
   }
 
   const entitlementsPath = path.join(__dirname, "entitlements.mac.plist");
