@@ -368,8 +368,9 @@ test("Bugs 6-12 & Feature 4: main/index.js static & behavioral verification", ()
   const plistContent = fs.readFileSync(entitlementsPlist, "utf8");
   assert.ok(
     plistContent.includes("com.apple.security.cs.allow-jit") &&
-      plistContent.includes("com.apple.security.device.screen-capture"),
-    "entitlements.mac.plist must include allow-jit and screen-capture entitlements",
+      plistContent.includes("com.apple.security.device.audio-input") &&
+      plistContent.includes("com.apple.security.device.camera"),
+    "entitlements.mac.plist must include allow-jit, audio-input, and camera Hardened Runtime entitlements",
   );
 
   // Bug 20: Editor presets directory uses userData instead of Documents to avoid macOS launchd TCC hang
@@ -447,6 +448,7 @@ test("Xcode project (Screenify.xcodeproj) and native Swift helper targets are pr
 
   const pbxproj = fs.readFileSync(pbxprojPath, "utf8");
   const buildScript = fs.readFileSync(xcodeBuildScript, "utf8");
+  const installerScript = fs.readFileSync(path.join(rootDir, "scripts", "install-macos-app.js"), "utf8");
   assert.ok(pbxproj.includes("scripts/entitlements.mac.plist"), "Xcode project must reference entitlements.mac.plist");
   assert.ok(pbxproj.includes("get-windows-arm64"), "Xcode project must include get-windows-arm64 target");
   assert.ok(pbxproj.includes("activate-window-arm64"), "Xcode project must include activate-window-arm64 target");
@@ -454,6 +456,7 @@ test("Xcode project (Screenify.xcodeproj) and native Swift helper targets are pr
   assert.ok(!pbxproj.includes("$(ARCHS_STANDARD)"), "Xcode project must lock ARCHS = arm64 for Apple Silicon Electron bundle");
   assert.ok(!pbxproj.includes("dwarf-with-dsym"), "Xcode project must not run dsymutil against prebuilt Electron binary");
   assert.ok(buildScript.includes(".nvm/versions/node"), "xcode-build-app.sh must resolve nvm Node.js binary when launched from Xcode GUI");
+  assert.ok(installerScript.includes('"--options", "runtime"'), "install-macos-app.js must sign all nested helpers and binaries with Hardened Runtime (--options runtime)");
 });
 
 test("White Minimal Apple System UI Redesign (Helium-inspired light aesthetic, SF Pro font stack, zero neon)", () => {

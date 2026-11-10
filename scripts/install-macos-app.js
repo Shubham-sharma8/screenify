@@ -49,7 +49,7 @@ function signUnpackedNodeAddons(appBundlePath, signIdentity) {
   for (const nodeAddon of findFilesByExtension(unpackedDir, (_p, name) => name.endsWith(".node"))) {
     execFileSync(
       "codesign",
-      ["--force", "--sign", identity, "--preserve-metadata=identifier,flags", nodeAddon],
+      ["--force", "--sign", identity, "--options", "runtime", "--timestamp=none", nodeAddon],
       { stdio: "inherit" },
     );
   }
@@ -61,11 +61,9 @@ function signNestedBundleContents(appBundlePath, signIdentity, entitlementsPath)
 
   const signBinary = (targetPath, withEntitlements = false) => {
     if (!fs.existsSync(targetPath)) return;
-    const args = ["--force", "--sign", identity];
+    const args = ["--force", "--sign", identity, "--options", "runtime", "--timestamp=none"];
     if (withEntitlements) {
       args.push("--entitlements", entitlementsPath);
-    } else {
-      args.push("--preserve-metadata=identifier,flags");
     }
     args.push(targetPath);
     execFileSync("codesign", args, { stdio: "inherit" });
